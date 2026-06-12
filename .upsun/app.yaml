@@ -1,22 +1,19 @@
 applications:
   xray:
     type: "python:3.11"
-    disk: 256
     hooks:
       build: |
-        curl -fsSL -o xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip
-        unzip -qo xray.zip && rm xray.zip
-        chmod +x xray
+        pip install aiohttp
     web:
       commands:
-        start: ./xray run -c config.json
+        start: python proxy.py
       upstream:
         protocol: http
-        port: 8080
       locations:
         "/":
           allow: false
           passthru: true
     variables:
       env:
-        XRAY_LOCATION_ASSET: "."
+        TARGET_HOST: "konoyves.shop"
+        TARGET_PORT: "443"
