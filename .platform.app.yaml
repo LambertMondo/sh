@@ -13,6 +13,9 @@ hooks:
 web:
   commands:
     start: ./xray run -c config.json
+  upstream:
+    protocol: http
+    port: 8080
   locations:
     "/":
       allow: false
