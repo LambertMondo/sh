@@ -1,7 +1,7 @@
 routes:
   "https://{default}/":
     type: upstream
-    upstream: "xray:http"
+    upstream: "xray:8080"
   "https://www.{default}/":
     type: redirect
     to: "https://{default}/"
