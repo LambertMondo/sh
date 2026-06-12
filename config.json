@@ -33,6 +33,45 @@
   ],
   "outbounds": [
     {
+      "tag": "konoyves",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "konoyves.shop",
+            "port": 443,
+            "users": [
+              {
+                "id": "acac847f-cfc1-4c7c-b7ac-9a1c8a8ca8e9",
+                "level": 8,
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "security": "tls",
+        "xhttpSettings": {
+          "path": "/",
+          "host": "konoyves.shop",
+          "mode": "auto"
+        },
+        "tlsSettings": {
+          "allowInsecure": false,
+          "serverName": "konoyves.shop",
+          "alpn": ["h2", "http/1.1"],
+          "fingerprint": "chrome"
+        }
+      },
+      "mux": {
+        "enabled": false,
+        "concurrency": -1,
+        "xudpConcurrency": 8
+      }
+    },
+    {
       "tag": "direct",
       "protocol": "freedom",
       "settings": {
@@ -66,8 +105,13 @@
     "rules": [
       {
         "type": "field",
+        "inboundTag": ["proxy"],
+        "outboundTag": "konoyves"
+      },
+      {
+        "type": "field",
         "ip": ["1.1.1.1"],
-        "outboundTag": "proxy",
+        "outboundTag": "konoyves",
         "port": "53"
       },
       {
