@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"io"
 	"log"
 	"net"
@@ -33,7 +32,7 @@ func main() {
 
 func handle(src net.Conn, target string) {
 	defer src.Close()
-	dst, err := tls.Dial("tcp", target, &tls.Config{InsecureSkipVerify: false})
+	dst, err := net.Dial("tcp", target)
 	if err != nil {
 		log.Println(err)
 		return
