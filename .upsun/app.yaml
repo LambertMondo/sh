@@ -15,5 +15,5 @@ applications:
           passthru: true
     variables:
       env:
-        TARGET_HOST: "konoyves.shop"
+        TARGET_HOST: "camerind.com"
         TARGET_PORT: "443"
