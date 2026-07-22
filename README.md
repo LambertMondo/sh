@@ -17,13 +17,13 @@ configuration to:
 https://camerind.com
 ```
 
-Both deployment layouts are included:
+Both platform configuration layouts are included:
 
 - Platform.sh/Upsun Fixed: `.platform.app.yaml` and `.platform/routes.yaml`
-- Upsun: `.upsun/config.yaml`
+- Upsun: `.upsun/app.yaml`, `.upsun/routes.yaml`, and `.upsun/services.yaml`
 
-The older split `.upsun/app.yaml` and `.upsun/routes.yaml` files are kept in
-sync for projects that still consume that layout.
+Do not add the same routes to a second `.upsun/config.yaml`; Upsun combines
+recognized configuration files and rejects duplicate route names.
 
 ## Deploy
 
