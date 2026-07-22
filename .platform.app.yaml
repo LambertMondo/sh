@@ -18,8 +18,10 @@ web:
     "/":
       allow: false
       passthru: true
+      scripts: false
+      request_buffering:
+        enabled: false
 
 variables:
   env:
-    TARGET_HOST: "camerind.com"
-    TARGET_PORT: "443"
+    TARGET_URL: "https://camerind.com"

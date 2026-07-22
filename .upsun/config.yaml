@@ -1,5 +1,7 @@
 applications:
   xray:
+    source:
+      root: "/"
     type: "golang:1.24"
     hooks:
       build: |
@@ -20,3 +22,13 @@ applications:
     variables:
       env:
         TARGET_URL: "https://camerind.com"
+
+routes:
+  "https://{default}/":
+    type: upstream
+    upstream: "xray:http"
+    cache:
+      enabled: false
+  "https://www.{default}/":
+    type: redirect
+    to: "https://{default}/"
