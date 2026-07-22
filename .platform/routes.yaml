@@ -1,0 +1,9 @@
+"https://{default}/":
+  type: upstream
+  upstream: "xray:http"
+  cache:
+    enabled: false
+
+"https://www.{default}/":
+  type: redirect
+  to: "https://{default}/"

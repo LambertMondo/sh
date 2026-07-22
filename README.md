@@ -1,20 +1,41 @@
-# Xray on Platform.sh
+# camerind.com reverse proxy on Upsun/Platform.sh
+
+This app exposes an Upsun/Platform.sh route and forwards every HTTP request to
+`https://camerind.com`. Client TLS is terminated by the platform router; the Go
+app creates a separate, certificate-verified TLS connection to camerind.com.
+
+The proxy preserves paths, query strings, request bodies, streaming responses,
+and protocol upgrades. It sends `Host: camerind.com` upstream and rewrites
+upstream redirects and domain cookies back to the public platform domain.
+
+## Configuration
+
+`TARGET_URL` controls the fixed upstream and defaults through the deployment
+configuration to:
+
+```text
+https://camerind.com
+```
+
+Both deployment layouts are included:
+
+- Platform.sh/Upsun Fixed: `.platform.app.yaml` and `.platform/routes.yaml`
+- Upsun: `.upsun/config.yaml`
+
+The older split `.upsun/app.yaml` and `.upsun/routes.yaml` files are kept in
+sync for projects that still consume that layout.
 
 ## Deploy
 
+Configure the project Git remote, then push the current commit/branch:
+
 ```bash
-# Create a Platform.sh project, then:
-git init
-git add .
-git commit -m "init"
 git remote add platform <your-platformsh-git-remote>
-git push platform main
+git push platform HEAD
 ```
 
-## Configure client
+After deployment, opening the generated `*.platformsh.site` URL should return
+the camerind.com application while the browser remains on the platform URL.
 
-Set client's `address` and TLS `serverName` to your Platform.sh domain, and the xhttp `host` to match.
-
-## Note
-
-TLS is terminated at Platform.sh edge. The server listens on port 8080 (internal) via xhttp without TLS.
+This is an HTTP reverse proxy, not an IP mirror: camerind.com is resolved by
+DNS and contacted from the platform container for each new upstream connection.
